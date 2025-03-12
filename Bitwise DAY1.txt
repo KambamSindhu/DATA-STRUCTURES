@@ -1,0 +1,70 @@
+/*************************************** GET SET CLEAR ****************************************/
+class Solution {
+    static void bitManipulation(int num, int i) {
+        // code here
+       if (((num >> (i - 1)) & 1) == 1) {
+            System.out.print("1 ");
+        } else {
+            System.out.print("0 ");
+        }
+
+        // Setting the i-th bit (making it 1)
+        System.out.print((num | (1 << (i - 1))) + " ");
+
+        // Clearing the i-th bit (making it 0)
+        System.out.print(num & ~(1 << (i - 1)));
+    }
+}
+
+/*********************************** K-th Bit is Set or Not************************************/
+class CheckBit {
+    static boolean checkKthBit(int n, int k) {
+        // Your code here
+        if((n&(1<<k))!=0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+/***************************** Odd or Even *************************************************/
+// User function Template for Java
+class Solution {
+    static boolean isEven(int n) {
+        // code here
+        if((n&1)==0)
+        {
+            return true;
+        }
+        return false;
+    }
+}
+/******************************* POWER OF 2*********************************/
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+      if(n<0)
+      {
+        return false;
+      }
+        while(n>2)
+        {
+           
+            if(((n)&1)!=0)
+            {
+               return false;
+                
+            }
+            n=n>>1;
+           
+        }
+          if(n==0)
+        {
+            return false;
+        }
+         
+        return true;
+    }
+}
