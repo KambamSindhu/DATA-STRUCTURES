@@ -106,3 +106,28 @@ class Solution {
         reverse(start+1 ,end-1,arr);
     }
 }
+=================
+PROGRAM 
+=====================
+
+MAXIMUM OF ARRAY
+class Solution {
+    // Function to find max using recursion
+    void max(int arr[]) {
+        int result = print(arr, 0, Integer.MIN_VALUE); // Start from index 0, initial max is the lowest integer
+        System.out.print(result); // Print the maximum value
+    }
+
+    int print(int arr[], int idx, int max) {
+        if (idx >= arr.length) {
+            return max; // Base case: return the max when end of array is reached
+        }
+
+        if (arr[idx] > max) {
+            max = arr[idx]; // Update max if current element is greater
+        }
+
+        return print(arr, idx + 1, max); // Recursive call with next index
+    }
+}
+
