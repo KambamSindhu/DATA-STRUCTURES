@@ -1,0 +1,72 @@
+PROGRAM 1
+==============
+Print Elements of Array
+Difficulty: BasicAccuracy: 60.55%Submissions: 108K+Points: 1Average Time: 15m
+Given an array arr[], print all its elements space-separated.
+
+Note: You don't need to move to the next line after printing all elements of the array (space-separated)
+
+Examples:
+
+Input: arr[] = [1, 2, 3, 4, 5]
+Output: 1 2 3 4 5
+Input: arr[] = [2, 3, 5, 5]
+Output: 2 3 5 5
+
+Code :
+// User function Template for Java
+
+class Solution {
+    // Just print the space seperated array elements
+    void printArray(int arr[]) {
+        //   code here
+        int idx=arr.length;
+        print(arr,idx,0);
+    }
+     void  print(int arr[],int idx,int i) {
+        //   code here
+        if(idx==i)
+        {
+            return ;
+        }
+       System.out.print(arr[i]+" ");
+       print(arr,idx,i+1);
+    }
+}
+
+==================
+PROGRAM 2
+===============
+Tower Of Hanoi
+Difficulty: MediumAccuracy: 35.23%Submissions: 169K+Points: 4
+In the Tower of Hanoi puzzle, you are given n disks stacked in ascending order (smallest at the top) on the first of three rods. The goal is to move all disks to the third rod following two rules: only one disk can be moved at a time, and a disk can only be placed on top of a larger disk. Given the number of disks n and three rods labeled as from, to, and aux (starting rod, target rod, and auxiliary rod, respectively),  returns the total number of moves needed to transfer all disks from the starting rod to the target rod.
+
+Examples:
+
+Input: n = 2
+Output: 3
+Explanation: For n =2 , steps will be as follows in the example and total 3 steps will be taken.
+move disk 1 from rod 1 to rod 2
+move disk 2 from rod 1 to rod 3
+move disk 1 from rod 2 to rod 3
+
+PROGRAM
+// User function Template for Java
+
+class Solution {
+    // Just print the space seperated array elements
+    void printArray(int arr[]) {
+        //   code here
+        int idx=arr.length;
+        print(arr,idx,0);
+    }
+     void  print(int arr[],int idx,int i) {
+        //   code here
+        if(idx==i)
+        {
+            return ;
+        }
+       System.out.print(arr[i]+" ");
+       print(arr,idx,i+1);
+    }
+}
