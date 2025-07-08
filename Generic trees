@@ -1,0 +1,184 @@
+*****************************************Day 1*****************************************************
+=====================================
+Inserting values into generic trees
+====================================
+
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static class Node{
+        int data;
+        ArrayList<Node> children =new ArrayList<>();
+    }
+    
+	public static void main(String[] args) {
+		 int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+         Node root=null;
+         Stack<Node> st=new Stack<>();
+         for(int i=0;i<arr.length;i++)
+         {
+            
+             Node t=new Node(); 
+             t.data=arr[i];
+             if(arr[i]== -1)
+             {
+                 st.pop();
+             }
+             else{
+                 if(st.isEmpty())
+                 {
+                     root=t;
+                 }
+                 else{
+                     st.peek().children.add(t);
+                 }
+                 st.push(t);
+             }
+         }
+	}
+}
+==================================
+Displaying values of generic tree
+===================================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static class Node{
+        int data;
+        ArrayList<Node> children =new ArrayList<>();
+    }
+   
+	public static void main(String[] args) {
+		 int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+         Node root=null;
+         Stack<Node> st=new Stack<>();
+         for(int i=0;i<arr.length;i++)
+         {
+            
+             Node t=new Node(); 
+             t.data=arr[i];
+             if(arr[i]== -1)
+             {
+                 st.pop();
+             }
+             else{
+                 if(st.isEmpty())
+                 {
+                     root=t;
+                 }
+                 else{
+                     st.peek().children.add(t);
+                 }
+                 st.push(t);
+             }
+         }
+         display(root);
+	}
+	 public static void display(Node node)
+    {
+        String str= node.data+"->";
+        for(Node child:node.children)
+        {
+            str+=child.data+",";
+        }
+        str+=".";
+        System.out.println(str);
+         for(Node child:node.children)
+        {
+            display(child);
+        }
+    }
+}
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static class Node{
+        int data;
+        ArrayList<Node> children =new ArrayList<>();
+    }
+   
+	public static void main(String[] args) {
+		 int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+         Node root=null;
+         Stack<Node> st=new Stack<>();
+         for(int i=0;i<arr.length;i++)
+         {
+            
+             Node t=new Node(); 
+             t.data=arr[i];
+             if(arr[i]== -1)
+             {
+                 st.pop();
+             }
+             else{
+                 if(st.isEmpty())
+                 {
+                     root=t;
+                 }
+                 else{
+                     st.peek().children.add(t);
+                 }
+                 st.push(t);
+             }
+         }
+         System.out.println("Tree data ==> ");
+          display(root);
+        int ans =sizeOfTree(root);
+        System.out.println("Size "+ans);
+        int ans2 =maxOfTree(root);
+        System.out.println("MAxi "+ans2);
+        int ans3 =heightOfTree(root);
+        System.out.println("Height of Tree "+ans3); //counts number of edges
+	}
+	public static int heightOfTree(Node node)
+	{
+	    int ht=-1;
+	    for(Node child:node.children)
+	    {
+	        int curr=heightOfTree(child);
+	        ht=Math.max(curr,ht);
+	    }
+	    ht+=1;
+	    return ht;
+	}
+		public static int maxOfTree(Node node)
+	{
+	    int max=-10000000;
+	   for(Node child:node.children)
+	   {
+	       int curr=maxOfTree(child);
+	      max=Math.max(curr,max);
+	   }
+	 max=Math.max(node.data,max);
+	  
+	   return max;
+	}
+	public static int sizeOfTree(Node node)
+	{
+	    int size=0;
+	   for(Node child:node.children)
+	   {
+	       int curr=sizeOfTree(child);
+	       size+=curr;
+	   }
+	   size++;
+	   return size;
+	}
+	 public static void display(Node node)
+    {
+        String str= node.data+"->";
+        for(Node child:node.children)
+        {
+            str+=child.data+",";
+        }
+        str+=".";
+        System.out.println(str);
+         for(Node child:node.children)
+        {
+            display(child);
+        }
+    }
+}
