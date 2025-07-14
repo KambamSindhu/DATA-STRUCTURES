@@ -1,0 +1,137 @@
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    private static class Node{
+        int data;
+        ArrayList<Node> children = new ArrayList<>();
+        Node(){
+            
+        }
+        Node(int data)
+        {
+            this.data=data;
+        }
+    }
+    public static class Pair{
+        Node node;
+        int level;
+        Pair(Node node,int level)
+        {
+            this.level=level;
+            this.node=node;
+        }
+    }
+	public static void main(String[] args) {
+	 int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+        Stack<Node> st=new Stack<>();
+        Node root =null;
+        for(int i=0;i<arr.length;i++)
+        {
+            if(arr[i]==-1)
+            {
+                st.pop();
+            }
+            else{
+                Node curr=new Node();
+                curr.data=arr[i];
+                if(st.size()==0)
+                {
+                    root=curr;
+                }else{
+                    st.peek().children.add(curr);
+                }
+                st.push(curr);
+            }
+        }
+        //LevelOrderLineWise2(root);
+        //LevelOrderLineWise3(root);
+        LevelOrderLineWise4(root);
+	}
+// 		public static void mirror(Node node)
+// 		{
+// 		    for(Node child:node.children)
+// 		    {
+// 		        mirror(child);
+// 		    }
+// 		    Collection.reverse(node.children);
+// 		}
+		public static void LevelOrderLineWise4(Node node)
+	{
+	    Queue<Pair> q =new ArrayDeque<>();
+	    q.add(new Pair(node,1));
+	    int level=1;
+	    while(q.size()>0)
+	    {
+	        Pair curr=q.remove();
+	        Node n=curr.node;
+	        int data=n.data;
+	        System.out.print(data+" ");
+	        if(curr.level>level)
+	        {
+	            level=curr.level;
+	            System.out.println();
+	        }
+	        for(Node child:curr.node.children)
+	        {
+	            Pair newPair = new Pair(child,level+1);
+	            q.add(newPair);
+	               
+	        }
+	     
+	       
+	    }
+	}
+	
+		public static void LevelOrderLineWise3(Node node)
+	{
+	      Queue<Node> q=new ArrayDeque<>();
+	    q.add(node);
+	    int size=1;
+	    while(q.size()>0)
+	    {
+	        Node curr=q.remove();
+	        System.out.print(curr.data+" ");
+	        size=size-1;
+	        for(Node child:curr.children)
+	        {
+	            q.add(child);
+	        }
+	        if(size==0)
+	        {
+	            size=q.size();
+	            System.out.println();
+	        }
+	    }
+	}
+	
+	
+	
+	public static void LevelOrderLineWise2(Node node)
+	{
+	    Queue<Node> q=new ArrayDeque<>();
+	    q.add(node);
+	    q.add(new Node(-1));
+	    while(q.size()>0)
+	    {
+	        Node curr=q.remove();
+	        int data=curr.data;
+	        
+	        if(data!=-1)
+	        {
+	            System.out.print(data+" ");
+	            for(Node child:curr.children)
+	            {
+	                q.add(child);
+	            }
+	        }
+	        else{
+	            if(q.size()>1)
+	            {
+	               q.add(new Node(-1));
+	               System.out.println();
+	            }
+	        }
+	    }
+	}
+}
