@@ -1,0 +1,50 @@
+https://www.geeksforgeeks.org/problems/power-set4302/1
+=============================================================
+Power Set
+Difficulty: MediumAccuracy: 43.3%Submissions: 106K+Points: 4
+Given a string s of length n, find all the possible non-empty subsequences of the string s in lexicographically-sorted order.
+
+Example 1:
+
+Input : 
+s = "abc"
+Output: 
+a ab abc ac b bc c
+Explanation : 
+There are a total 7 number of subsequences possible for the given string, and they are mentioned above in lexicographically sorted order.
+Example 2:
+
+Input: 
+s = "aa"
+Output: 
+a a aa
+Explanation : 
+There are a total 3 number of subsequences possible for the given string, and they are mentioned above in lexicographically sorted order.
+
+class Solution {
+    public List<String> AllPossibleStrings(String s) {
+        // Code here
+        List<String> ans=new ArrayList<>();
+        String op="";
+        powerSet(s,op,ans);
+        Collection.sort(ans);
+        return ans;
+    }
+    public void  powerSet(String ip,String op,List<String> ans)
+    {
+        if(ip.length()==0)
+        {
+            if(op.length()>0)
+            {
+                ans.add(op);
+            }
+            return;
+        }
+         
+         String op1=op;
+         String op2=op+ip.charAt(0);
+         ip=ip.substring(1);
+         powerSet(ip,op1,ans);
+         powerSet(ip,op2,ans);
+    }
+}
