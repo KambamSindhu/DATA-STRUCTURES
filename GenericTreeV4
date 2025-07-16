@@ -172,3 +172,354 @@ public class Main
     return root;
 }
 }
+
+Symmentric
+==========================================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static boolean isMirror(Node n1,Node n2)
+    {
+        if(n1.children.size()!=n2.children.size())
+        {
+            return false;
+        }
+        for(int i=0;i<n1.children.size();i++)
+        {
+            int j=n2.children.size()-1-i;
+            Node c1=n1.children.get(i);
+            Node c2=n2.children.get(j);
+            if(!isMirror(c1,c2))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static boolean symmentric(Node n1,Node n2)
+    {
+        return isMirror(n1, n2);
+    }
+    public static class Node{
+        int data;
+        ArrayList<Node> children =new ArrayList<>();
+    }
+   
+	public static void main(String[] args) {
+		 int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+         Node root=null;
+         Stack<Node> st=new Stack<>();
+         for(int i=0;i<arr.length;i++)
+         {
+            
+             Node t=new Node(); 
+             t.data=arr[i];
+             if(arr[i]== -1)
+             {
+                 st.pop();
+             }
+             else{
+                 if(st.isEmpty())
+                 {
+                     root=t;
+                 }
+                 else{
+                     st.peek().children.add(t);
+                 }
+                 st.push(t);
+             }
+         }
+        //  display(root);
+         System.out.println(symmentric(root,root));
+	}
+	 public static void display(Node node)
+    {
+        String str= node.data+"->";
+        for(Node child:node.children)
+        {
+            str+=child.data+",";
+        }
+        str+=".";
+        System.out.println(str);
+         for(Node child:node.children)
+        {
+            display(child);
+        }
+    }
+}
+=======================
+Generic tree solver
+===========================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+     public static class Node{
+        int data;
+        ArrayList<Node> children =new ArrayList<>();
+    }
+  static int size;
+  static int min;
+  static int max;
+  static int height;
+   
+    public static void  genericTreeSolver(Node node,int depth){
+        size+=1;
+        min=Math.min(min,node.data);
+        max=Math.max(max,node.data);
+        height=Math.max(height,depth);
+        for(Node child:node.children)
+        {
+            genericTreeSolver(child,depth+1);
+        }
+    }
+   
+	public static void main(String[] args) {
+		 int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+         Node root=null;
+         Stack<Node> st=new Stack<>();
+         for(int i=0;i<arr.length;i++)
+         {
+            
+             Node t=new Node(); 
+             t.data=arr[i];
+             if(arr[i]== -1)
+             {
+                 st.pop();
+             }
+             else{
+                 if(st.isEmpty())
+                 {
+                     root=t;
+                 }
+                 else{
+                     st.peek().children.add(t);
+                 }
+                 st.push(t);
+             }
+         }
+       size=0;
+       min=Integer.MAX_VALUE;
+       max=Integer.MIN_VALUE;
+       height=0;
+       genericTreeSolver(root,0);
+       System.out.print("size "+size+" min "+min+" max "+max+" height "+height);
+	}
+==========================================
+predecessorAndSuccessor
+=========================================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+     public static class Node{
+        int data;
+        ArrayList<Node> children =new ArrayList<>();
+    }
+  static int state;
+  static Node predecessor;
+  static Node successor;
+   
+   public static void  predecessorAndSuccessor(Node node,int data)
+   {
+       if(state==0)
+       {
+           if(node.data==data)
+           {
+               state+=1;
+           }
+           else{
+               predecessor=node;
+           }
+       }
+       else if(state==1)
+       {
+          successor=node; 
+       }
+       for(Node child:node.children)
+       {
+           predecessorAndSuccessor(child,data);
+       }
+   }
+	public static void main(String[] args) {
+		 int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+         Node root=null;
+         Stack<Node> st=new Stack<>();
+         for(int i=0;i<arr.length;i++)
+         {
+            
+             Node t=new Node(); 
+             t.data=arr[i];
+             if(arr[i]== -1)
+             {
+                 st.pop();
+             }
+             else{
+                 if(st.isEmpty())
+                 {
+                     root=t;
+                 }
+                 else{
+                     st.peek().children.add(t);
+                 }
+                 st.push(t);
+             }
+         }
+       state=0;
+       predecessor=null;
+       successor=null;
+       predecessorAndSuccessor(root,110);
+       System.out.print("predecessor "+predecessor.data+" successor "+successor.data);
+	}
+
+}
+=============================
+Ceil and floor
+==============================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+     public static class Node{
+        int data;
+        ArrayList<Node> children =new ArrayList<>();
+    }
+  static int ceil;
+  static int floor;
+   
+   public static void  ceilAndfloor(Node node,int data)
+   {
+      if(node.data>data)
+      {
+          if(node.data<ceil)
+          {
+              ceil=node.data;
+          }
+      }
+      if(node.data<data)
+      {
+          if(node.data>floor)
+          {
+              floor=node.data;
+          }
+      }
+       for(Node child:node.children)
+       {
+           ceilAndfloor(child,data);
+       }
+   }
+	public static void main(String[] args) {
+		 int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+         Node root=null;
+         Stack<Node> st=new Stack<>();
+         for(int i=0;i<arr.length;i++)
+         {
+            
+             Node t=new Node(); 
+             t.data=arr[i];
+             if(arr[i]== -1)
+             {
+                 st.pop();
+             }
+             else{
+                 if(st.isEmpty())
+                 {
+                     root=t;
+                 }
+                 else{
+                     st.peek().children.add(t);
+                 }
+                 st.push(t);
+             }
+         }
+       
+       ceil=Integer.MAX_VALUE;
+       floor=Integer.MIN_VALUE;
+       ceilAndfloor(root,110);
+       System.out.print("ceil "+ceil+" floor "+floor);
+	}
+
+}
+=======================================
+Kth largest
+=======================================
+
+import java.util.*;
+import java.io.*;
+public class Main
+{
+     public static class Node{
+        int data;
+        ArrayList<Node> children =new ArrayList<>();
+    }
+  static int ceil;
+  static int floor;
+   
+   public static void  ceilAndfloor(Node node,int data)
+   {
+      if(node.data>data)
+      {
+          if(node.data<ceil)
+          {
+              ceil=node.data;
+          }
+      }
+      if(node.data<data)
+      {
+          if(node.data>floor)
+          {
+              floor=node.data;
+          }
+      }
+       for(Node child:node.children)
+       {
+           ceilAndfloor(child,data);
+       }
+   }
+   public static int kthLargest(Node node,int k)
+   {
+       floor=Integer.MIN_VALUE;
+       int factor=Integer.MAX_VALUE;
+       for(int i=0;i<k;i++)
+       {
+           ceilAndfloor(node,factor);
+           factor=floor;
+           floor=Integer.MIN_VALUE;
+       }
+       return factor;
+   }
+	public static void main(String[] args) {
+		 int arr[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+         Node root=null;
+         Stack<Node> st=new Stack<>();
+         for(int i=0;i<arr.length;i++)
+         {
+            
+             Node t=new Node(); 
+             t.data=arr[i];
+             if(arr[i]== -1)
+             {
+                 st.pop();
+             }
+             else{
+                 if(st.isEmpty())
+                 {
+                     root=t;
+                 }
+                 else{
+                     st.peek().children.add(t);
+                 }
+                 st.push(t);
+             }
+         }
+       
+       ceil=Integer.MAX_VALUE;
+       floor=Integer.MIN_VALUE;
+       
+       System.out.print("K th Largest "+kthLargest(root,3));
+	}
+
+}
+
+
