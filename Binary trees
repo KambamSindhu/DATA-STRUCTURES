@@ -146,3 +146,186 @@ public class Main {
         Traversal(root);
     }
 }
+
+=================================================================================
+Binary tree traversal, print k levels down , level order traversal,Node to root Path
+======================================================================================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static class Node{
+        Node right;
+        Node left;
+        int data;
+        public Node(int data , Node left,Node right)
+        {
+            this.data=data;
+            this.left=left;
+            this.right=right;
+        }
+    }
+      public static class Pair{
+          Node node;
+          int state;
+          public Pair(Node node,int state){
+              this.node=node;
+              this.state=state;
+          }
+      }
+    public static void levelOrderTraversal(Node node)
+    {
+         Queue<Node> q=new ArrayDeque<>();
+         q.add(node);
+         int size=q.size();
+         while(q.size()>0)
+         {
+             size--;
+             Node top=q.remove();
+             System.out.print(top.data+" ");
+             if(top.left!=null)
+             {
+                 q.add(top.left);
+             }
+             if(top.right!=null)
+             {
+                 q.add(top.right);
+             }
+             
+             if(size==0)
+             {
+               size=q.size();  
+               System.out.println(" ");
+             }
+         }
+    }
+    public static void IterativeTraversal(Node node)
+    {
+        Stack<Pair> st=new Stack<>();
+        st.push(new Pair(node,1));
+        
+        String pre="";
+        String post="";
+        String in="";
+        
+        while(st.size()>0)
+        {
+            Pair p=st.peek();
+            Node top=p.node;
+            if(p.state==1)
+            {
+                p.state++;
+                pre+=top.data+" ";
+                if(top.left!=null)
+                {
+                    st.push(new Pair(top.left,1));
+                }
+                
+            }else if(p.state==2)
+            {
+                p.state++;
+                in+=top.data+" ";
+                if(top.right!=null)
+                {
+                    st.push(new Pair(top.right,1));
+                }
+                
+            }else{
+                post+=top.data+" ";
+                st.pop();
+                
+            }
+            
+        }
+        System.out.println("pre -> "+pre);
+         System.out.println("in -> "+in);
+          System.out.println("post ->" + post);
+    }
+    
+     static ArrayList<Integer>  list;
+    public static boolean NodeToRootPath(Node node,int data)
+    {
+        if(node==null)
+        {
+            return false;
+        }
+        if(node.data==data)
+        {
+            list.add(node.data);
+            return true;
+        }
+        
+        if(NodeToRootPath(node.left,data))
+        {
+            list.add(node.data);
+            return true;
+        }
+         if(NodeToRootPath(node.right,data))
+        {
+            list.add(node.data);
+            return true;
+        }
+        return false;
+    }
+    
+    
+    public static void KlevelDown(Node node,int k)
+    {
+        if(node==null || k<0)
+        {
+            return;
+        }
+        if(k==0)
+        {
+            System.out.print(node.data+" ");
+        }
+        KlevelDown(node.left,k-1);
+        KlevelDown(node.right,k-1);
+    }
+	public static void main(String[] args) {
+        Integer arr[] = {50, 25, 12, null, null, 37, 30, null, null, null, 75, 62, null, 70, null, 87, null, null};
+
+        Node root = new Node(arr[0], null, null);
+        Stack<Pair> st = new Stack<>();
+        st.push(new Pair(root, 1));
+
+        int i = 0;
+        while (!st.isEmpty()) {
+            Pair cp = st.peek();
+
+            if (cp.state == 1) {
+                i++;
+                if (i < arr.length) {
+                    if (arr[i] == null) {
+                        cp.node.left = null;
+                    } else {
+                        Node node = new Node(arr[i], null, null);
+                        cp.node.left = node;
+                        st.push(new Pair(node, 1));
+                    }
+                }
+                cp.state++;
+            } else if (cp.state == 2) {
+                i++;
+                if (i < arr.length) {
+                    if (arr[i] == null) {
+                        cp.node.right = null;
+                    } else {
+                        Node node = new Node(arr[i], null, null);
+                        cp.node.right = node;
+                        st.push(new Pair(node, 1));
+                    }
+                }
+                cp.state++;
+            } else {
+                st.pop();
+            }
+        }
+       // IterativeTraversal(root);
+      list=new ArrayList<>();
+      NodeToRootPath(root,87);
+      System.out.print(list);
+       System.out.println();
+      KlevelDown(root,2);
+    }
+}
