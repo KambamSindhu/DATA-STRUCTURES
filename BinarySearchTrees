@@ -1,0 +1,98 @@
+public class Main
+{
+    public static class Node {
+        int data;
+        Node left;
+        Node right;
+
+        Node(int data, Node left, Node right) {
+            this.data = data;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public static void display(Node node) {
+        if (node == null) return;
+
+        String str = (node.left != null ? node.left.data : ".") +
+                     " <- node -> " + node.data +
+                     " -> " + (node.right != null ? node.right.data : ".");
+        System.out.println(str);
+
+        display(node.left);
+        display(node.right);
+    }
+
+    public static int sum(Node node) {
+        if (node == null) return 0;
+        return sum(node.left) + sum(node.right) + node.data;
+    }
+
+    public static int size(Node node) {
+        if (node == null) return 0;
+        return size(node.left) + size(node.right) + 1;
+    }
+
+    public static int max(Node node) {
+        if (node.right == null) return node.data;
+        return max(node.right);
+    }
+
+    public static int min(Node node) {
+        if (node.left == null) return node.data;
+        return min(node.left); // FIXED from `max(node.left)`
+    }
+
+    public static boolean find(Node node, int data) {
+        if (node == null) return false;
+
+        if (node.data > data) {
+            return find(node.left, data); // FIXED
+        } else if (node.data < data) {
+            return find(node.right, data); // FIXED
+        } else {
+            return true;
+        }
+    }
+
+    public static Node addNode(Node node, int data) {
+        if (node == null) return new Node(data, null, null);
+
+        if (node.data > data) {
+            node.left = addNode(node.left, data);
+        } else if (node.data < data) {
+            node.right = addNode(node.right, data);
+        }
+        return node;
+    }
+
+    public static Node construct(int arr[], int low, int high) {
+        if (low > high) return null;
+
+        int mid = (low + high) / 2;
+        int data = arr[mid];
+        Node leftChild = construct(arr, low, mid - 1);
+        Node rightChild = construct(arr, mid + 1, high);
+        return new Node(data, leftChild, rightChild);
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {12, 25, 37, 62, 75, 87};
+        Node root = construct(arr, 0, arr.length - 1);
+
+        System.out.println("Displaying Tree:");
+        display(root);
+
+        System.out.println("\nTree Size: " + size(root));
+        System.out.println("Sum of all nodes: " + sum(root));
+        System.out.println("Max value: " + max(root));
+        System.out.println("Min value: " + min(root));
+        System.out.println("Find 62? " + find(root, 62));
+        System.out.println("Find 100? " + find(root, 100));
+
+        System.out.println("\nAdding 50 to BST...");
+        root = addNode(root, 50);
+        display(root);
+    }
+}
