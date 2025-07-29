@@ -96,3 +96,52 @@ public class Main
         display(root);
     }
 }
+=======================================
+Remove Node in a binary Tree
+==========================================
+class Tree {
+    // Function to delete a node from BST.
+    public static int max(Node node)
+    {
+        if(node.right==null)
+        {
+            return node.data;
+        }
+        return max(node.right);
+    }
+    public static Node deleteNode(Node node, int X) {
+      if(node==null)
+      {
+          return null;
+      }
+      if(node.data>X)
+      {
+          node.left=deleteNode(node.left,X);
+      }
+      else if(node.data<X)
+      {
+          node.right=deleteNode(node.right,X);
+      }
+      else{
+          if(node.left!=null && node.right!=null)
+          {
+              int lmax=max(node.left);
+              node.data=lmax;
+              node.left=deleteNode(node.left,lmax);
+              return node;
+          }
+          else if(node.left!=null)
+          {
+              return node.left;
+          }
+          else if(node.right!=null)
+          {
+              return node.right;
+          }
+          else{
+              return null;
+          }
+      }
+      return node;
+    }
+}
