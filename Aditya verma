@@ -37,3 +37,50 @@ public class Main {
     }
 
 }
+==================================
+Sort a stack
+================================
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+
+       Stack<Integer> stack = new Stack<>();
+
+        // Pushing 5 elements into the stack
+        stack.push(110);
+        stack.push(20);
+        stack.push(30);
+        stack.push(420);
+        stack.push(50);
+
+        sort(stack);
+        System.out.println(stack);
+    }
+    private static void sort( Stack<Integer> st)
+    {
+      if(st.size()==1)
+      {
+          return;
+      }
+      int temp=st.peek();
+      st.pop();
+      sort(st);
+      insert(st,temp);
+    }
+    public static void insert(Stack<Integer> st, int temp)
+    {
+        if(st.size()==0 || st.peek()<=temp)
+        {
+            st.push(temp);
+            return;
+        }
+        int ele= st.peek();
+        st.pop();
+        insert(st,temp);
+        st.push(ele);
+    }
+
+}
