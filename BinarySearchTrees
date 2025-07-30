@@ -145,3 +145,138 @@ class Tree {
       return node;
     }
 }
+=============================================================================
+Replace with sum of larger in BST
+Least common ancestor
+print in range
+Target Sum Pair
+=============================================================================
+public class Main
+{
+    public static class Node {
+        int data;
+        Node left;
+        Node right;
+
+        Node(int data, Node left, Node right) {
+            this.data = data;
+            this.left = left;
+            this.right = right;
+        }
+    }
+public static Node construct(int arr[], int low, int high) {
+        if (low > high) return null;
+
+        int mid = (low + high) / 2;
+        int data = arr[mid];
+        Node leftChild = construct(arr, low, mid - 1);
+        Node rightChild = construct(arr, mid + 1, high);
+        return new Node(data, leftChild, rightChild);
+    }
+
+    public static void display(Node node) {
+        if (node == null) return;
+
+        String str = (node.left != null ? node.left.data : ".") +
+                     " <- node -> " + node.data +
+                     " -> " + (node.right != null ? node.right.data : ".");
+        System.out.println(str);
+
+        display(node.left);
+        display(node.right);
+    }
+
+   static int sum=0;
+   public static void RWS(Node node){
+       if(node==null)
+       {
+           return ;
+       }
+       RWS(node.right);
+       int curr=node.data;
+       node.data=sum;
+       sum+=curr;
+       RWS(node.left);
+   }
+   //LEAST COMMON ANCESTOR
+  public static int LCA(Node node, int d1, int d2) {
+    if (node == null) {
+        return -1; // or throw exception if node is null
+    }
+
+    // Both values greater than current node → LCA lies in right subtree
+    if (d1 > node.data && d2 > node.data) {
+        return LCA(node.right, d1, d2);
+    }
+
+    // Both values smaller than current node → LCA lies in left subtree
+    else if (d1 < node.data && d2 < node.data) {
+        return LCA(node.left, d1, d2);
+    }
+
+    // One value is on the left and one on the right → current node is LCA
+    else {
+        return node.data;
+    }
+}
+//PRINT IN RANGE
+public static void PIN(Node node,int d1,int d2)
+{
+    if(node==null)
+    {
+        return;
+    }
+    
+    if (d1 > node.data && d2 > node.data) {
+         PIN(node.right, d1, d2);
+    }
+
+    else if (d1 < node.data && d2 < node.data) {
+         PIN(node.left, d1, d2);
+    }
+
+    else {
+        PIN(node.left, d1, d2);
+        System.out.print(node.data+" ");
+        PIN(node.right, d1, d2);
+    }
+}
+   public static void TargetSumPair(Node root,Node node,int target)
+   {
+       if(node ==null)
+       {
+           return;
+       }
+       TargetSumPair(root,node.left,target);
+       int compliment=target-node.data;
+       if(compliment>node.data)
+       {
+           if(find(root,compliment))
+           {
+               System.out.print(node.data+" "+compliment);
+           }
+       }
+       TargetSumPair(root,node.right,target);
+   }
+   
+    public static boolean find(Node node, int data) {
+        if (node == null) return false;
+
+        if (node.data > data) {
+            return find(node.left, data); // FIXED
+        } else if (node.data < data) {
+            return find(node.right, data); // FIXED
+        } else {
+            return true;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {12, 25, 37, 62, 75, 87};
+        Node root = construct(arr, 0, arr.length - 1);
+     //   RWS(root);
+      //  display(root);
+     // PIN(root,12,62);
+     TargetSumPair(root,root,100);
+    }
+}
