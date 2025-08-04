@@ -84,3 +84,56 @@ public class Main {
     }
 
 }
+
+=========================================
+Delete middle element of a  stack
+==============================================
+class Solution {
+    // Function to delete middle element of a stack.
+    public void deleteMid(Stack<Integer> s) {
+        int k=(s.size()/2)+1;
+        deleteMiddle(s,k);
+        
+    }
+    public void deleteMiddle(Stack<Integer> s,int k){
+        
+        if(s.size()<=0)
+        {
+            return;
+        }
+        if(k==1)
+        {
+            s.pop();
+            return;
+        }
+        int temp=s.pop();
+        deleteMiddle(s,k-1);
+        s.push(temp);
+    }
+}
+=========================================
+reverse stack
+=========================================
+
+class Solution {
+    static void reverse(Stack<Integer> st) {
+      if(st.size()==0)
+      {
+          return;
+      }
+      int temp=st.pop();
+      reverse(st);
+     insert(st,temp);
+        
+    }
+    static void insert(Stack<Integer> st,int tmp) {
+        if(st.size()==0)
+        {
+            st.push(tmp);
+            return;
+        }
+        int curr=st.pop();
+        insert(st,tmp);
+        st.push(curr);
+    }
+}
