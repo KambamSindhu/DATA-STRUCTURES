@@ -604,3 +604,41 @@ public class Main {
        
     }
 }
+=========================================
+Calculate diameter
+=======================================
+class Solution {
+    int diameter(Node root) {
+    Pair p=calcDia(root);
+    
+    return p.dia;
+        
+    }
+    public static class Pair{
+    int height;
+    int dia;
+}
+
+public static Pair calcDia(Node node)
+{
+    if(node==null)
+    {
+        Pair p=new Pair();
+        p.height=-1;
+        p.dia=0;
+        return p;
+    }
+    
+    Pair left=calcDia(node.left);
+    Pair right=calcDia(node.right);
+    
+    Pair ans=new Pair();
+    ans.height=Math.max(left.height,right.height)+1;
+    
+    int currdia=left.height+right.height+2;
+    
+    ans.dia=Math.max(currdia,Math.max(left.dia,right.dia));
+    
+    return ans;
+}
+}
