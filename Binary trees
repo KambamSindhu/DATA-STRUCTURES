@@ -480,7 +480,7 @@ public class Main {
 }
 
 ========================================
-LEFT CLONED TREE
+LEFT CLONED TREE and back from left cloned
 =================================
 import java.util.*;
 
@@ -506,20 +506,34 @@ public class Main {
             this.state = state;
         }
     }
-    public static Node LeftCLoneTree(Node node)
+    public static Node LeftCLoneTree(Node node){
+        if(node ==null)
+        {
+            return null;
+        }
+        Node lcr =LeftCLoneTree(node.left);
+        Node rcr=LeftCLoneTree(node.right);
+        Node nNode = new Node(node.data,lcr,null);
+        
+        node.left=nNode;
+        node.right=rcr;
+        return node;
+    }
+    public static Node undoLeftCLoneTree(Node node)
     {
         if(node ==null)
         {
             return null;
         }
-    Node lcr=LeftCLoneTree(node.left);
-    Node rcr=LeftCLoneTree(node.right);
-    
-    Node nn=new Node(node.data,lcr,null);
-    node.left=nn;
-    node.right=rcr;
-    
-    return node;
+         Node leftOriginal = null;
+    if (node.left != null) {
+        leftOriginal = undoLeftCLoneTree(node.left.left);
+    }
+
+        Node rightOriginal=undoLeftCLoneTree(node.right);
+        node.left=leftOriginal;
+        node.right=rightOriginal;
+        return node;
     }
     public static void display(Node node) {
         if (node == null) {
@@ -590,5 +604,3 @@ public class Main {
        
     }
 }
-
-
