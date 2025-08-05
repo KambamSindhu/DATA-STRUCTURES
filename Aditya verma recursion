@@ -155,3 +155,19 @@ class Solution {
 
     }
 }
+===============================
+Tower of hanoi
+=============================
+class Solution {
+    public int towerOfHanoi(int n, int from, int to, int aux) {
+        // code here
+        if(n==1)
+        {
+            return 1;
+        }
+        int c1=towerOfHanoi(n-1,from,aux,to);
+        
+        int c2= towerOfHanoi(n-1,aux,to,from);
+        return c1+c2+1;
+    }
+}
