@@ -43,3 +43,92 @@ public class Main
 
 	}
 }
+======================================
+Has Path and print all paths
+=====================================
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    static class Edge {
+        int src;
+        int nbr;
+        int wt;
+
+        public Edge(int src, int nbr, int wt) {
+            this.src = src;
+            this.nbr = nbr;
+            this.wt = wt;
+        }
+    }
+
+    public static void printAllpaths(ArrayList<Edge>[] graph, int src, int dest, boolean visited[], String psf) {
+        if (src == dest) {
+            System.out.println(psf);
+            return;
+        }
+        visited[src] = true;
+
+        for (Edge edge : graph[src]) {
+            if (!visited[edge.nbr]) {
+                printAllpaths(graph, edge.nbr, dest, visited, psf + edge.nbr);
+            }
+        }
+
+        visited[src] = false;
+    }
+
+    public static boolean hasPath(ArrayList<Edge>[] graph, int src, int dest, boolean visited[]) {
+        if (src == dest) {
+            return true;
+        }
+
+        visited[src] = true;
+
+        for (Edge edge : graph[src]) {
+            if (!visited[edge.nbr]) {
+                boolean hasNbrPath = hasPath(graph, edge.nbr, dest, visited);
+                if (hasNbrPath) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int vertices = Integer.parseInt(br.readLine());
+        int edges = Integer.parseInt(br.readLine());
+
+        ArrayList<Edge>[] graph = new ArrayList[vertices];
+        for (int i = 0; i < vertices; i++) {
+            graph[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < edges; i++) {
+            String[] parts = br.readLine().split(" ");
+            int v1 = Integer.parseInt(parts[0]);
+            int v2 = Integer.parseInt(parts[1]);
+            int wt = Integer.parseInt(parts[2]);
+            graph[v1].add(new Edge(v1, v2, wt));
+            graph[v2].add(new Edge(v2, v1, wt));
+        }
+
+       
+
+        // Sample call to check hasPath and printAllpaths
+        int src = 0;
+        int dest = 3;
+
+        System.out.println("\nDoes path exist from " + src + " to " + dest + "?");
+        boolean[] visited = new boolean[vertices];
+        System.out.println(hasPath(graph, src, dest, visited));
+
+        System.out.println("\nAll paths from " + src + " to " + dest + ":");
+        boolean[] visitedForAllPaths = new boolean[vertices];
+        printAllpaths(graph, src, dest, visitedForAllPaths, src + "");
+    }
+}
+
