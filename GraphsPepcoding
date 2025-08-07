@@ -266,4 +266,68 @@ System.out.println(k + "th largest path = " + pq.peek().psf + "@" + pq.peek().ws
 
 	}
 }
-
+================================
+Get connected components in a graph
+=================================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static class Edge{
+        int src;
+        int nbr;
+        int wt;
+        public Edge(int src,int nbr,int wt){
+            this.src=src;
+            this.nbr=nbr;
+            this.wt=wt;
+        }
+    }
+   public static void drawTreeAndGenerate(ArrayList<Edge>[] graph,boolean visited[],ArrayList<Integer> list,int src)
+   {
+       visited[src]=true;
+       list.add(src);
+       for(Edge e: graph[src])
+       {
+           if(!visited[e.nbr])
+           {
+                drawTreeAndGenerate(graph,visited,list,e.nbr);
+           }
+       }
+   }
+	public static void main(String[] args) throws Exception{
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		
+		int vertices=Integer.parseInt(br.readLine());
+		int edges=Integer.parseInt(br.readLine());
+		
+		ArrayList<Edge>[] graph=new ArrayList[vertices];
+		
+		for(int i=0;i<vertices;i++)
+		{
+		    graph[i]=new ArrayList<>();
+		}
+		for(int i=0;i<edges;i++)
+		{
+		    String parts[]=br.readLine().split(" ");
+		    int v1=Integer.parseInt(parts[0]);
+		    int v2=Integer.parseInt(parts[1]);
+		    int wt=Integer.parseInt(parts[2]);
+		    graph[v1].add(new Edge(v1,v2,wt));
+		    graph[v2].add(new Edge(v2,v1,wt));
+		}
+		ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+		boolean visited[]=new boolean[vertices];
+	    for(int i=0;i<vertices;i++)
+	    {
+	        if(!visited[i])
+	        {
+	            ArrayList<Integer> list=new ArrayList<>();
+	        drawTreeAndGenerate(graph,visited,list,i);
+	         ans.add(list);
+	        }
+	       
+	    }
+	    System.out.print(ans);
+	}
+}
