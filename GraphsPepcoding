@@ -408,3 +408,43 @@ public class Main
 	    }
 	}
 }
+=================================================
+No of islands
+===========================================
+public class Main
+{
+	public static void main(String[] args) {
+	   int[][] arr = {
+    {1, 1, 0, 0, 0},
+    {1, 1, 0, 0, 0},
+    {0, 0, 1, 0, 0},
+    {0, 0, 0, 1, 1}
+        };
+       boolean visited[][]=new boolean[arr.length][arr[0].length];
+       int cnt=0;
+       for(int i=0;i<arr.length;i++)
+       {
+           for(int j=0;j<arr[0].length;j++)
+           {
+               if(arr[i][j]==0 && !visited[i][j])
+               {
+                   findConnectComponent(arr,visited,i,j);
+                   cnt++;
+               }
+           }
+       }
+       System.out.print("No of islands "+ cnt);
+	}
+	public static void findConnectComponent(int arr[][],boolean visited[][],int i,int j)
+	{
+	    if(i<0 || j<0 || i>=arr.length|| j>=arr[0].length || visited[i][j]==true || arr[i][j]==1 )
+	    {
+	        return;
+	    }
+	    visited[i][j]=true;
+	    findConnectComponent(arr,visited,i+1,j);
+	    findConnectComponent(arr,visited,i,j+1);
+	    findConnectComponent(arr,visited,i-1,j);
+	    findConnectComponent(arr,visited,i,j-1);
+	}
+}
