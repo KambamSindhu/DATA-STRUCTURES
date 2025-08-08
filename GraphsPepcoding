@@ -331,3 +331,80 @@ public class Main
 	    System.out.print(ans);
 	}
 }
+=========================================================
+Is graph Connected?
+==============================================================
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static class Edge{
+        int src;
+        int wt;
+        int nbr;
+        public Edge(int src,int nbr,int wt)
+        {
+            this.src=src;
+            this.wt=wt;
+            this.nbr=nbr;
+        }
+    }
+	public static void main(String[] args) throws Exception{
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		
+		int vertices=Integer.parseInt(br.readLine());
+		int edges=Integer.parseInt(br.readLine());
+		ArrayList<Edge>[] graph=new ArrayList[vertices];
+		
+		for(int i=0;i<vertices;i++)
+		{
+		    graph[i]=new ArrayList<>();
+		}
+		for(int i=0;i<edges;i++)
+		{
+		    String paths[]=br.readLine().split(" ");
+		    
+		    int v1=Integer.parseInt(paths[0]);
+		    int v2=Integer.parseInt(paths[1]);
+		    int wt=Integer.parseInt(paths[2]);
+		    
+		    graph[v1].add(new Edge(v1,v2,wt));
+		    graph[v2].add(new Edge(v2,v1,wt));
+		}
+		boolean visited[]=new boolean[vertices];
+		int cnt=0;
+		for(int i=0;i<vertices;i++)
+		{
+		    if(!visited[i])
+		    {
+		        ConnectedComponents( graph,visited,i);
+		        cnt++;
+		    }
+		}
+		if(cnt<=1)
+		{
+		    System.out.print("connected graph");
+		}
+		else{
+		    System.out.print("unconnected graph");
+		}
+	}
+	public static void ConnectedComponents(ArrayList<Edge>[] graph,boolean visited[],int src)
+	{
+	    visited[src]=true;
+	    for(Edge e:graph[src])
+	    {
+	        if(!visited[e.nbr])
+	        {
+	            ConnectedComponents( graph,visited,e.nbr);
+	        }
+	    }
+	}
+}
