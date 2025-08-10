@@ -719,4 +719,96 @@ public class Main
 	    return false;
 	}
 }
+==================================
+Bipartite Graph 
+===================================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    static class Edge{
+        int src;
+        int nbr;
+        int wt;
+        public Edge(int src,int nbr,int wt){
+            this.src=src;
+            this.nbr=nbr;
+            this.wt=wt;
+        }
+    }
+    public static class Pair{
+        int v;
+        int level;
+        public Pair(int v,int level)
+        {
+            this.v=v;
+            this.level=level;
+        }
+    }
+	public static void main(String[] args) throws Exception {
+	   BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	   int vertices=Integer.parseInt(br.readLine());
+	   int edges=Integer.parseInt(br.readLine());
+	   ArrayList<Edge>[] graph=new ArrayList[vertices];
+	   for(int i=0;i<vertices;i++)
+	   {
+	       graph[i]=new ArrayList<>();
+	   }
+	   for(int i=0;i<edges;i++)
+	   {
+	       String parts[]=br.readLine().split(" ");
+	       int v1=Integer.parseInt(parts[0]);
+	       int v2=Integer.parseInt(parts[1]);
+	       int wt=Integer.parseInt(parts[2]);
+	       graph[v1].add(new Edge(v1,v2,wt));
+	       graph[v2].add(new Edge(v2,v1,wt));
+	   }
+	  
+        int visited[]=new int[vertices];
+        Arrays.fill(visited,-1);
+        boolean flag=true;
+        for(int i=0;i<vertices;i++){
+            if(visited[i]==-1)
+            {
+              flag= bipartite(i,graph,visited);
+            }
+        }
+        if(flag)
+        {
+            System.out.println("bipartite graph");
+        }
+        else{
+            System.out.println("Not a bipartite graph");
+        }
+ 
+}
+    
+    public static boolean bipartite(int src,ArrayList<Edge>[] graph,int visited[])
+    {
+        Queue<Pair> q=new ArrayDeque<>();
+        q.add(new Pair(src,0));
+        while(q.size()>0)
+        {
+            Pair rem= q.remove();
+            if(visited[rem.v]!=-1)
+            {
+                if(visited[rem.v]!=rem.level)
+                {
+                    return false;
+                }
+            }
+            else{
+                visited[rem.v]=rem.level;
+                for(Edge e: graph[rem.v])
+                {
+                    if(visited[e.nbr]==-1)
+                    {
+                    q.add(new Pair(e.nbr,rem.level+1));
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
+}
