@@ -171,3 +171,31 @@ class Solution {
         return c1+c2+1;
     }
 }
+==========================
+Print Subsets
+========================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static void printSubset(String ip,String op,ArrayList<String> list)
+    {
+        if(ip.length()==0)
+        {
+            list.add(op);
+            return;
+        }
+        String op1=op+ip.charAt(0);
+        String op2=op;
+        ip=ip.substring(1);
+        printSubset(ip,op1,list);
+        printSubset(ip,op2,list);
+    }
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		String str=sc.next();
+		ArrayList<String> list=new ArrayList<>();
+		printSubset(str,"",list);
+		System.out.print(list);
+	}
+}
