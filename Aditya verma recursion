@@ -199,3 +199,27 @@ public class Main
 		System.out.print(list);
 	}
 }
+============================
+Unique Substrings
+=============================
+import java.util.*;
+
+public class Main {
+    public static void printSubset(String ip, String op, HashSet<String> set) {
+        if (ip.length() == 0) {
+            set.add(op);
+            return;
+        }
+        printSubset(ip.substring(1), op + ip.charAt(0), set); // include
+        printSubset(ip.substring(1), op, set);               // exclude
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        HashSet<String> set = new HashSet<>();
+        printSubset(str, "", set);
+        System.out.println(set);
+    }
+}
+
