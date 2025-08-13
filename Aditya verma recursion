@@ -288,3 +288,34 @@ public class Main
         
 	}
 }
+================================
+Permutation with case change
+================================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static void PermuationwithCaseChange(String ip,String op,ArrayList<String> list)
+    {
+        if(ip.length()==0)
+        {
+            list.add(op);
+            return;
+        }
+        String op1=op+ip.charAt(0);
+        String op2=op+Character.toUpperCase(ip.charAt(0));
+        ip=ip.substring(1);
+        PermuationwithCaseChange(ip,op1,list);
+        PermuationwithCaseChange(ip,op2,list);
+    }
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		String str=sc.next();
+		ArrayList<String> list=new ArrayList<>();
+		PermuationwithCaseChange(str,"",list);
+	   // Print results
+       
+            System.out.println(list);
+        
+	}
+}
