@@ -222,4 +222,39 @@ public class Main {
         System.out.println(set);
     }
 }
+===============================
+PERMUTATION WITH SPACE
+================================
+import java.util.*;
+
+public class Main {
+    public static void permutationWithSpaces(String ip, String op, ArrayList<String> list) {
+        if (ip.length() == 0) {
+            list.add(op);
+            return;
+        }
+        
+        // Choice 1: Add space before next char
+        permutationWithSpaces(ip.substring(1), op + " " + ip.charAt(0), list);
+        
+        // Choice 2: Add next char without space
+        permutationWithSpaces(ip.substring(1), op + ip.charAt(0), list);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        
+        ArrayList<String> list = new ArrayList<>();
+        String op = "" + str.charAt(0); // First char is always without leading space
+        String ip = str.substring(1);   // Remaining chars
+        
+        permutationWithSpaces(ip, op, list);
+        
+        // Print results
+        for (String s : list) {
+            System.out.println(s);
+        }
+    }
+}
 
