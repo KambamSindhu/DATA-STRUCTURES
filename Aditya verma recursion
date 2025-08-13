@@ -289,7 +289,7 @@ public class Main
 	}
 }
 ================================
-Permutation with case change
+Permutation with Upper case change
 ================================
 import java.util.*;
 import java.io.*;
