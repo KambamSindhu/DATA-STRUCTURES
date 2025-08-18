@@ -319,3 +319,35 @@ public class Main
         
 	}
 }
+===========================
+Balanced paranthesis
+==============================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static void BalancedParenthesis(int open,int close,String asf,ArrayList<String> list)
+    {
+        if(close==0 && open==0)
+        {
+            list.add(asf);
+            return;
+        }
+        if(open!=0)
+        {
+            BalancedParenthesis(open-1,close,asf+"(",list);
+        }
+        if(close>open)
+        {
+             BalancedParenthesis(open,close-1,asf+")",list);
+        }
+    }
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		ArrayList<String> list=new ArrayList<>();
+		BalancedParenthesis(n,n,"",list);
+		System.out.print(list);
+	}
+}
+
