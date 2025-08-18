@@ -350,4 +350,35 @@ public class Main
 		System.out.print(list);
 	}
 }
+===========================================
+Balanced Parenthesis
+=============================================
+import java.util.*;
+import java.io.*;
+public class Main
+{
+    public static void BalancedParenthesis(int One,int Zero,int n,String asf,
+    ArrayList<String> list)
+    {
+        if(One+Zero==n)
+        {
+          list.add(asf);
+          return;
+        }
+       
+            BalancedParenthesis(One+1,Zero,n,asf+"1",list);
+        
+        if(One>Zero)
+        {
+            BalancedParenthesis(One,Zero+1,n,asf+"0",list);
+        }
+    }
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		ArrayList<String> list=new ArrayList<>();
+		BalancedParenthesis(0,0,n,"",list);
+		System.out.print(list);
+	}
+}
 
